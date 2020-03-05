@@ -1,0 +1,193 @@
+############## 私募基金
+#删除索引
+curl -XDELETE http://localhost:9200/fund
+#创建索引
+curl -XPUT http://localhost:9200/fund -H 'Content-Type:application/json' -d'
+{
+    "index": {
+        "analysis": {
+            "analyzer": {
+                "ik_pinyin_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "ik_smart",
+                    "filter": ["my_pinyin", "word_delimiter"]
+                }
+            },
+            "filter": {
+                "my_pinyin": {
+                    "type": "pinyin",
+                    "first_letter": "prefix",
+                    "padding_char": " "
+                }
+            }
+        }
+    }
+}'
+
+curl -XGET http://localhost:9200/fund/_analyze -H 'Content-Type:application/json' -d'
+{
+  "text": ["刘德华"],
+  "analyzer": "pinyin_analyzer"
+}'
+
+curl -XPOST http://localhost:9200/fund/firm/_mapping -H 'Content-Type:application/json' -d'
+{
+    "firm": {
+        "properties": {
+            "managerName": {
+                "type": "keyword",
+                "fields": {
+                    "pinyin": {
+                        "type": "text",
+                        "store": "false",
+                        "term_vector": "with_positions_offsets",
+                        "analyzer": "ik_pinyin_analyzer",
+                        "boost": 10
+                    }
+                }
+            }
+        }
+    }
+}'
+#test 
+curl http://localhost:9200/fund/firm/_search?q=managerName.pinyin:dstf
+http get http://localhost:9200/fund/firm/_search?q=managerName.pinyin:dstf
+
+############沪深股通，机构
+#删除索引
+curl -XDELETE http://localhost:9200/holders
+#创建索引
+curl -XPUT http://localhost:9200/holders -H 'Content-Type:application/json' -d'
+{
+    "index": {
+        "analysis": {
+            "analyzer": {
+                "ik_pinyin_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "ik_smart",
+                    "filter": ["my_pinyin", "word_delimiter"]
+                }
+            },
+            "filter": {
+                "my_pinyin": {
+                    "type": "pinyin",
+                    "first_letter": "prefix",
+                    "padding_char": " "
+                }
+            }
+        }
+    }
+}'
+curl -XPOST http://localhost:9200/holders/hsgt/_mapping -H 'Content-Type:application/json' -d'
+{
+    "hsgt": {
+        "properties": {
+            "name": {
+                "type": "keyword",
+                "fields": {
+                    "pinyin": {
+                        "type": "text",
+                        "store": "false",
+                        "term_vector": "with_positions_offsets",
+                        "analyzer": "ik_pinyin_analyzer",
+                        "boost": 10
+                    }
+                }
+            }
+        }
+    }
+}'
+#test 
+curl http://localhost:9200/holders/hsgt/_search?q=name.pinyin:jp
+curl http://localhost:9200/holders/hsgt/_search -d'
+{
+    "query" : {
+        "term" : { "name.pinyin" : "jp" }
+    }
+}'
+
+http get http://localhost:9200/holders/hsgt/_search?q=name.pinyin:hf
+
+curl -XDELETE http://localhost:9200/stock
+curl -XPUT http://localhost:9200/stock -H 'Content-Type:application/json' -d'
+{
+    "index": {
+        "analysis": {
+            "analyzer": {
+                "ik_pinyin_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "ik_smart",
+                    "filter": ["my_pinyin", "word_delimiter"]
+                }
+            },
+            "filter": {
+                "my_pinyin": {
+                    "type": "pinyin",
+                    "first_letter": "prefix",
+                    "padding_char": " "
+                }
+            }
+        }
+    }
+}'
+
+curl -XPOST http://localhost:9200/stock/dailyrecords/_mapping -H 'Content-Type:application/json' -d'
+{
+    "dailyrecords": {
+        "properties": {
+            "name": {
+                "type": "keyword",
+                "fields": {
+                    "pinyin": {
+                        "type": "text",
+                        "store": "false",
+                        "term_vector": "with_positions_offsets",
+                        "analyzer": "ik_pinyin_analyzer",
+                        "boost": 10
+                    }
+                }
+            },
+            "changepercent": {
+                "type": "float"
+            },
+            "trade": {
+                "type": "float"
+            },
+            "open": {
+                "type": "float"
+            },
+            "high": {
+                "type": "float"
+            },
+            "low": {
+                "type": "float"
+            },
+            "settlement": {
+                "type": "float"
+            },
+            "volume": {
+                "type": "float"
+            },
+            "turnoverratio": {
+                "type": "float"
+            },
+            "amount": {
+                "type": "float"
+            },
+            "per": {
+                "type": "float"
+            },
+            "pb": {
+                "type": "float"
+            },
+            "mktcap": {
+                "type": "float"
+            },
+            "nmc": {
+                "type": "float"
+            }
+        }
+    }
+}'
+
+http get http://localhost:9200/stock/dailyrecords/_search?q=name.pinyin:zgpa

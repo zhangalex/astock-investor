@@ -1,0 +1,39 @@
+.map {
+	height: 420px;
+	padding: 10px 3px;
+}
+.col-md-6 {
+  position: relative;
+}
+.chartTypeSelector {
+  position: absolute;
+  right: 22px;
+  top: 6px;
+}
+.buy {
+  color: red;
+  font-weight: 400;
+  font: normal normal normal 13px/1 FontAwesome;
+}
+.buy::after{
+  content: "\f062";
+  font-weight: 400;
+}
+.sold {
+  color: green;
+  font-weight: 400;
+  font: normal normal normal 13px/1 FontAwesome;
+}
+.sold::after{
+  content: "\f063";
+  font-weight: 400;
+}
+.block {
+  position: absolute;
+  width: 45%;
+  top: 10px;
+  right: 120px;
+}
+.attentions {
+  font-weight: 400;
+}

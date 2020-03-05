@@ -1,0 +1,63 @@
+
+.idea/
+.DS_Store
+*.swp
+
+invest/app/assets/**
+invest/app/index.html
+
+daily-data/
+
+#Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.coverage.*
+.cache
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+
+# Flask stuff:
+.webassets-cache
+
+
+#web front node
+#
+web-front/node_modules/
+web-front/.npm
+web-front/.eslintcache
+web-front/.node_repl_history
+web-front/.tgz
+web-front/.yarn-integrity
+web-front/.env
+web-front/dist/
+
+.vscode/ 
+
+*.tar.gz
+
+invest/scheduler.lock
+bkservice.log
+invest/celerybeat-schedule.db
+*.pid
+
+invest-assistant/
