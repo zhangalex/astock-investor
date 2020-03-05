@@ -19,7 +19,7 @@ nose2==0.7.3
 demjson==2.2.4
 #sudo apt-get install python3-lxml
 tushare==1.0.7
-Pillow==4.0
+Pillow==6.2.0
 Flask-Session==0.3.1
 Flask-APScheduler==1.7.1
 yunpian-python-sdk==1.0.0
